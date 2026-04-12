@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Riko & Bruno's WIE Day Challenge 2026</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --ieee-blue: #00629B;
+      --ieee-mid: #00629B;
+      --ieee-light: #e8f6fb;
+      --wie-purple: #772583;
+      --ieee-gray: #63666A;
+      --wie-gold: #f4a40a;
+      --wie-coral: #ff6b6b;
+      --dark: #0a1628;
+      --dark2: #112240;
+      --card: #162a4a;
+      --text: #cde4f7;
+      --text-muted: #7fa8c9;
+      --success: #2ec4b6;
+      --error: #ff6b6b;
+      --border: rgba(119, 37, 131, 0.35);
+      --glow: 0 0 24px rgba(119, 37, 131, 0.25);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: linear-gradient(135deg, rgba(10, 21, 37, 0.95), rgba(1, 65, 97, 0.867)), url('https://ik.imagekit.io/simenya/assets/wie_cover_1.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Subtle grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(119, 37, 131, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(119, 37, 131, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 32px 0 28px;
+      text-align: center;
+    }
+
+    .ieee-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0, 98, 155, 0.18);
+      border: 1px solid rgba(0, 98, 155, 0.35);
+      border-radius: 30px;
+      padding: 6px 18px 6px 10px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--wie-purple);
+      text-transform: uppercase;
+    }
+
+    .ieee-diamond span {
+      transform: rotate(-45deg);
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0;
+    }
+
+    header h1 {
+      font-size: clamp(1.5rem, 4vw, 2.3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: #fff;
+    }
+
+    header h1 span {
+      color: var(--wie-purple);
+    }
+
+    header p.subtitle {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      line-height: 1.6;
+    }
+
+    .wie-day-tag {
+      background: linear-gradient(90deg, var(--ieee-blue), var(--wie-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ── PROGRESS TRACK ── */
+    .progress-track {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 20px 0 32px;
+    }
+
+    .step-dot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: default;
+    }
+
+    .dot-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--ieee-gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--card);
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .step-dot.active .dot-circle {
+      border-color: var(--wie-purple);
+      color: var(--wie-purple);
+      box-shadow: 0 0 0 4px rgba(119, 37, 131, 0.15);
+    }
+
+    .step-dot.done .dot-circle {
+      background: var(--success);
+      border-color: var(--success);
+      color: var(--dark);
+    }
+
+    .dot-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      text-align: center;
+      max-width: 70px;
+    }
+
+    .step-dot.active .dot-label {
+      color: var(--wie-purple);
+    }
+
+    .step-dot.done .dot-label {
+      color: var(--success);
+    }
+
+    .track-line {
+      flex: 1;
+      height: 2px;
+      background: var(--ieee-gray);
+      margin: 0 2px;
+      margin-bottom: 6px;
+      max-width: 80px;
+      transition: background 0.4s ease;
+    }
+
+    .track-line.done {
+      background: var(--success);
+    }
+
+    /* ── CHALLENGE CARD ── */
+    .challenge-card {
+      background: rgba(22, 42, 74, 0.93);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 24px;
+      box-shadow: var(--glow);
+      animation: fadeSlide 0.45s ease both;
+      min-height: 520px;
+      /* Forces equal height across challenges */
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .challenge-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .step-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .step-icon.cipher {
+      background: rgba(0, 98, 155, 0.15);
+      border: 1px solid rgba(0, 98, 155, 0.3);
+    }
+
+    .step-icon.logic {
+      background: rgba(244, 164, 10, 0.12);
+      border: 1px solid rgba(244, 164, 10, 0.3);
+    }
+
+    .step-icon.rebus {
+      background: rgba(46, 196, 182, 0.12);
+      border: 1px solid rgba(46, 196, 182, 0.3);
+    }
+
+    .step-meta h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+
+    .step-meta p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .challenge-body {
+      line-height: 1.7;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* ── CIPHER ── */
+    .cipher-display {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      letter-spacing: 0.15em;
+      color: var(--wie-purple);
+      text-align: center;
+      margin-bottom: 16px;
+      word-break: break-all;
+    }
+
+    .hint-box {
+      background: rgba(244, 164, 10, 0.07);
+      border: 1px solid rgba(244, 164, 10, 0.25);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.76rem;
+      color: var(--wie-gold);
+      margin-bottom: 18px;
+    }
+
+    .hint-box strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .cipher-table {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+      gap: 4px;
+      margin-bottom: 18px;
+    }
+
+    .cipher-cell {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 4px;
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+    }
+
+    .cipher-cell .top {
+      color: var(--wie-purple);
+      font-weight: 700;
+      font-size: 0.68rem;
+    }
+
+    /* ── BLOCKCHAIN CROSSWORD (grid left, clues in one column) ── */
+    .xw-layout {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px 18px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .xw-layout .xw-outer {
+      margin: 0;
+      flex-shrink: 0;
+    }
+
+    .xw-layout .xw-clues-panel {
+      margin-top: 0;
+      flex: 1 1 0;
+      min-width: 0;
+      max-width: calc(100% - 312px - 18px);
+    }
+
+    .xw-outer {
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;
+      padding: 2px 0 6px;
+      flex-shrink: 0;
+    }
+
+    .xw-grid {
+      display: inline-grid;
+      grid-template-columns: repeat(9, 32px);
+      grid-template-rows: repeat(8, 32px);
+      gap: 3px;
+      flex-shrink: 0;
+    }
+
+    .xw-cell {
+      width: 32px;
+      height: 32px;
+      border-radius: 5px;
+      border: 1.5px solid transparent;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+
+    .xw-cell.dead {
+      pointer-events: none;
+    }
+
+    .xw-cell.live {
+      border-color: rgba(119, 37, 131, 0.35);
+      background: rgba(12, 30, 58, 0.9);
+      box-shadow: inset 0 0 8px rgba(119, 37, 131, 0.07);
+    }
+
+    .xw-cell.live:hover {
+      border-color: rgba(119, 37, 131, 0.6);
+    }
+
+    .xw-cell.shared {
+      border-color: rgba(244, 164, 10, 0.5);
+      background: rgba(244, 164, 10, 0.08);
+    }
+
+    .xw-cell.hint {
+      border-color: rgba(119, 37, 131, 0.55);
+      background: rgba(119, 37, 131, 0.1);
+    }
+
+    .xw-cell.hint input {
+      color: var(--wie-purple) !important;
+      font-weight: 700;
+    }
+
+    .xw-cell.hl-across {
+      border-color: rgba(119, 37, 131, 0.75);
+      background: rgba(119, 37, 131, 0.12);
+      box-shadow: 0 0 10px rgba(119, 37, 131, 0.18);
+    }
+
+    .xw-cell.hl-down {
+      border-color: rgba(244, 164, 10, 0.75);
+      background: rgba(244, 164, 10, 0.12);
+      box-shadow: 0 0 10px rgba(244, 164, 10, 0.18);
+    }
+
+    .xw-cell.correct-cell {
+      border-color: var(--success) !important;
+      background: rgba(46, 196, 182, 0.12) !important;
+      box-shadow: 0 0 12px rgba(46, 196, 182, 0.25) !important;
+    }
+
+    .xw-cell.correct-cell input {
+      color: var(--success) !important;
+    }
+
+    .xw-cell.wrong-cell {
+      border-color: var(--error) !important;
+      animation: shake 0.35s ease;
+    }
+
+    .xw-cell .cn {
+      position: absolute;
+      top: 2px;
+      left: 3px;
+      font-size: 0.4rem;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      color: var(--wie-gold);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .xw-cell input {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #e8f6ff;
+      text-transform: uppercase;
+      caret-color: var(--wie-purple);
+      padding-top: 4px;
+    }
+
+    .xw-cell input:disabled {
+      pointer-events: none;
+    }
+
+    .xw-clues-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .xw-clues-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .xw-clues-block.across-clues {
+      padding-top: 8px;
+      margin-top: 2px;
+      border-top: 1px solid rgba(119, 37, 131, 0.22);
+    }
+
+    .clue-col-title {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .clue-col-title.across {
+      color: var(--wie-purple);
+    }
+
+    .clue-col-title.down {
+      color: var(--wie-gold);
+    }
+
+    .clue-row {
+      display: flex;
+      gap: 7px;
+      align-items: flex-start;
+      margin-bottom: 4px;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 7px;
+      border: 1px solid transparent;
+      transition: background 0.18s, border-color 0.18s;
+    }
+
+    .clue-row:hover {
+      background: rgba(119, 37, 131, 0.06);
+      border-color: var(--border);
+    }
+
+    .clue-row.active-clue {
+      background: rgba(119, 37, 131, 0.1);
+      border-color: rgba(119, 37, 131, 0.3);
+    }
+
+    .c-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--wie-purple);
+      min-width: 14px;
+      padding-top: 1px;
+    }
+
+    .down-clues .c-num {
+      color: var(--wie-gold);
+    }
+
+    .c-txt {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .c-len {
+      font-size: 0.55rem;
+      color: rgba(127, 168, 201, 0.4);
+      margin-left: 3px;
+    }
+
+    .xw-scanline {
+      height: 1px;
+      border-radius: 2px;
+      margin: 8px 0;
+      background: linear-gradient(90deg, transparent 0%, var(--wie-purple) 40%, var(--wie-gold) 60%, transparent 100%);
+      opacity: 0.55;
+    }
+
+    .xw-verify-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    /* ── REBUS ── */
+    .rebus-clues {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 18px 0 22px;
+    }
+
+    .rebus-piece {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .rebus-emoji {
+      font-size: 2.2rem;
+      line-height: 1;
+    }
+
+    .rebus-label {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .rebus-op {
+      font-size: 1.4rem;
+      color: var(--wie-coral);
+      font-weight: 700;
+      font-family: 'Space Mono', monospace;
+      padding-top: 8px;
+    }
+
+    .rebus-equals {
+      font-size: 1.6rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      padding-top: 8px;
+    }
+
+    .rebus-blank {
+      width: 100px;
+      height: 38px;
+      border-bottom: 2px solid var(--wie-purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--wie-purple);
+      letter-spacing: 0.1em;
+      margin-top: 8px;
+    }
+
+    /* ── INPUT ── */
+    .answer-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .answer-input {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.9rem;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .answer-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .answer-input:focus {
+      border-color: var(--wie-purple);
+    }
+
+    .answer-input.correct {
+      border-color: var(--success);
+    }
+
+    .answer-input.wrong {
+      border-color: var(--error);
+      animation: shake 0.35s ease;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-6px);
+      }
+
+      75% {
+        transform: translateX(6px);
+      }
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--ieee-blue), var(--wie-purple));
+      border: none;
+      border-radius: 10px;
+      padding: 13px 22px;
+      color: #fff;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-submit:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .feedback {
+      margin-top: 12px;
+      font-size: 0.8rem;
+      min-height: 20px;
+      transition: color 0.2s;
+    }
+
+    .feedback.err {
+      color: var(--error);
+    }
+
+    /* ── BRUNO HINT ── */
+    .bruno-hint-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 1px solid rgba(244, 164, 10, 0.35);
+      border-radius: 8px;
+      padding: 7px 14px;
+      color: var(--wie-gold);
+      font-size: 0.75rem;
+      font-family: 'Sora', sans-serif;
+      cursor: pointer;
+      margin-top: 14px;
+      transition: background 0.2s;
+    }
+
+    .bruno-hint-btn:hover {
+      background: rgba(244, 164, 10, 0.08);
+    }
+
+    .bruno-speech {
+      display: none;
+      margin-top: 12px;
+      background: rgba(244, 164, 10, 0.07);
+      border-left: 3px solid var(--wie-gold);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 14px;
+      font-size: 0.78rem;
+      color: var(--wie-gold);
+      line-height: 1.6;
+      animation: fadeSlide 0.3s ease both;
+    }
+
+    .bruno-speech.visible {
+      display: block;
+    }
+
+    /* ── SUCCESS MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 22, 40, 0.85);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      background: var(--card);
+      border: 1px solid var(--wie-purple);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 0 40px rgba(119, 37, 131, 0.3);
+      transform: translateY(20px) scale(0.95);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-content .checkmark {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+    }
+
+    .modal-content h3 {
+      font-size: 1.3rem;
+      color: var(--success);
+      margin-bottom: 10px;
+    }
+
+    .modal-content p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .click-hint {
+      font-size: 0.75rem;
+      color: var(--wie-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      animation: pulse-text 1.5s infinite;
+      font-weight: 600;
+    }
+
+    @keyframes pulse-text {
+
+      0%,
+      100% {
+        opacity: 0.5;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    /* ── WELCOME & FINAL SCREENS ── */
+    .welcome-screen,
+    .final-screen {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+      animation: fadeSlide 0.5s ease both;
+    }
+
+    .final-screen.visible {
+      display: block;
+    }
+
+    .welcome-screen.visible {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 55vh;
+    }
+
+    .dynamic-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      padding: 10px 36px 14px;
+      border-bottom-left-radius: 26px;
+      border-bottom-right-radius: 26px;
+      box-shadow: 0 8px 25px rgba(119, 37, 131, 0.25);
+      z-index: 100;
+    }
+
+    .dynamic-notch img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .welcome-logo {
+      width: 240px;
+      height: 240px;
+      /* margin: 0 auto px; */
+      /* background: #ffffff; */
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 140px rgba(119, 37, 131, 0.5);
+      /* padding: 16px; */
+    }
+
+    .welcome-logo img {
+      max-width: 100%;
+      height: auto;
+      object-fit: fill;
+    }
+
+    .start-btn {
+      background: linear-gradient(135deg, #a63cbd, var(--wie-purple));
+      margin-top: 15px;
+      font-size: 1.1rem;
+      padding: 16px 42px;
+      border-radius: 30px;
+      border: none;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(119, 37, 131, 0.4);
+    }
+
+    .start-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(119, 37, 131, 0.6);
+    }
+
+    .final-badge {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 22px;
+      background: linear-gradient(135deg, var(--ieee-blue), var(--wie-purple));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      box-shadow: 0 0 40px rgba(119, 37, 131, 0.4);
+      animation: pulse 2.5s ease infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 30px rgba(119, 37, 131, 0.35);
+      }
+
+      50% {
+        box-shadow: 0 0 55px rgba(119, 37, 131, 0.6);
+      }
+    }
+
+    .final-screen h2,
+    .welcome-screen h2 {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .final-screen h2 span,
+    .welcome-screen h2 span {
+      color: var(--wie-purple);
+    }
+
+    .final-screen .tagline,
+    .welcome-screen .tagline {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      max-width: 420px;
+      margin: 0 auto 24px;
+      line-height: 1.7;
+    }
+
+    .pass-phrase-box {
+      background: rgba(119, 37, 131, 0.08);
+      border: 1px dashed var(--wie-purple);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 0 auto 28px;
+      max-width: 400px;
+    }
+
+    .pass-phrase-box .celebrate {
+      font-size: 0.9rem;
+      color: #fff;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .pass-phrase-box .instruct {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .pass-phrase-box .phrase {
+      font-size: 1.3rem;
+      font-family: 'Space Mono', monospace;
+      color: var(--wie-gold);
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .badge-chip {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 8px 18px;
+      font-size: 0.72rem;
+      color: var(--wie-purple);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .final-theme {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      margin-top: 10px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    footer span {
+      color: var(--ieee-mid);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .xw-layout {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .xw-layout .xw-outer {
+        align-self: center;
+      }
+
+      .xw-layout .xw-clues-panel {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .dynamic-notch {
+        padding: 8px 20px 12px;
+        gap: 16px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+      }
+
+      .dynamic-notch img {
+        height: 28px;
+      }
+
+      .challenge-card {
+        padding: 22px 16px;
+        min-height: 440px;
+      }
+
+      .answer-group {
+        flex-direction: column;
+      }
+
+      .btn-submit {
+        width: 100%;
+        text-align: center;
+      }
+
+      .rebus-clues {
+        gap: 6px;
+      }
+
+      .rebus-emoji {
+        font-size: 1.8rem;
+      }
+
+      .welcome-logo {
+        width: 110px;
+        height: 110px;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dynamic-notch">
+    <img src="https://ik.imagekit.io/simenya/logos/ieee%20logo.png" alt="IEEE Logo">
+    <img src="https://ik.imagekit.io/simenya/logos/WIE_Logo.png" alt="WIE Logo">
+    <img src="https://ik.imagekit.io/simenya/logos/Collabratec%20logo.png" alt="Collabratec Logo">
+  </div>
+  <div class="wrapper">
+
+    <!-- HEADER -->
+    <header style="margin-top: 50px;">
+      <div class="ieee-badge" style="color: white; text-align: center;">
+        IEEE WIE Day 2026 BADGE CHALLENGE
+      </div>
+      <!-- <p class="subtitle" style="margin-top: 10px;">Help Riko-chan and Bruno save the day — earn your STEM Innovator
+        badge!</p> -->
+    </header>
+
+    <!-- PROGRESS -->
+    <div class="progress-track" id="progressTrack" style="display:none;">
+      <div class="step-dot active" id="dot0">
+        <div class="dot-circle">01</div>
+        <!-- <div class="dot-label">Cipher</div> -->
+      </div>
+      <div class="track-line" id="line0"></div>
+      <div class="step-dot" id="dot1">
+        <div class="dot-circle">02</div>
+        <!-- <div class="dot-label">Logic</div> -->
+      </div>
+      <div class="track-line" id="line1"></div>
+      <div class="step-dot" id="dot2">
+        <div class="dot-circle">03</div>
+        <!-- <div class="dot-label">.</div> -->
+      </div>
+    </div>
+
+    <!-- ══════════ WELCOME CARD ══════════ -->
+    <div class="welcome-screen visible" id="welcomeCard">
+      <div class="welcome-logo">
+        <img src="https://ik.imagekit.io/simenya/assets/riko_and_bruno.png" alt="WIE Logo">
+      </div>
+      <h2>Welcome to <span>WIE Day 2026</span> Challenge!</h2>
+      <p class="tagline">
+        Join Riko-chan and Bruno to decode technology with purpose. Solve the <strong>three puzzles</strong> to unlock
+        the Pass Phrase
+        and earn your
+        badge!
+      </p>
+      <!-- <div class="badge-row">
+      <div class="badge-chip">Innovate</div>
+      <div class="badge-chip">Inspire</div>
+      <div class="badge-chip">Lead</div>
+    </div> -->
+      <button class="start-btn" onclick="startChallenge()">Get Started 🚀</button>
+    </div>
+
+    <!-- ══════════ STEP 1: CAESAR CIPHER ══════════ -->
+    <div class="challenge-card" id="step1" style="display:none;">
+      <div class="challenge-header">
+        <div class="step-icon cipher">🔐</div>
+        <div class="step-meta">
+          <h2>Phase 01 — The Coded Message</h2>
+          <p>Riko found a mysterious encrypted note. Help her decode it using the Caesar Cipher!</p>
+        </div>
+      </div>
+
+      <div class="challenge-body">
+        <div class="hint-box">
+          <div class="cipher-display" id="cipherText"> <b>ZRPHQ HQJLQHHU</b></div>
+
+          <!-- Reference strip A–Z shifted 3 -->
+          <div class="cipher-table" id="cipherTable"></div>
+
+          <div class="answer-group">
+            <input class="answer-input" id="ans1" type="text" placeholder="Type the decoded phrase…"
+              autocomplete="off" />
+            <button class="btn-submit" onclick="checkStep1()">Check</button>
+          </div>
+          <div class="feedback" id="fb1"></div>
+
+          <button class="bruno-hint-btn" onclick="toggleHint('brh1')">🐾 Ask Bruno for a hint</button>
+          <div class="bruno-speech" id="brh1">*Woof!* The first word starts with W and the second starts with E. Count
+            back 3 letters from Z… what do you get? 🐶</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ STEP 2: BLOCKCHAIN CROSSWORD ══════════ -->
+    <div class="challenge-card" id="step2" style="display:none">
+      <div class="challenge-header">
+        <div class="step-icon logic">🔢</div>
+        <div class="step-meta">
+          <h2>Phase 02 — Riko's Block Grid</h2>
+          <p>Four terms from Riko’s universe—chained into a single network. Fill every block to bring the grid online.
+          </p>
+        </div>
+      </div>
+
+      <div class="challenge-body">
+        <div class="xw-scanline"></div>
+
+        <div class="xw-layout">
+          <div class="xw-outer">
+            <div class="xw-grid" id="xwGrid">
+              <!-- built by JS -->
+            </div>
+          </div>
+          <div class="xw-clues-panel">
+            <div class="xw-clues-block down-clues">
+              <div class="clue-col-title down">↓ Down</div>
+              <div class="clue-row" id="cr-1" onclick="hlWord('down',1)">
+                <span class="c-num">1</span>
+                <span class="c-txt">Riko's superpower — creating something new to solve problems</span>
+              </div>
+              <div class="clue-row" id="cr-2" onclick="hlWord('down',5)">
+                <span class="c-num">2</span>
+                <span class="c-txt">Riko runs this before every experiment — systematic investigation</span>
+              </div>
+            </div>
+            <div class="xw-clues-block across-clues">
+              <div class="clue-col-title across">→ Across</div>
+              <div class="clue-row" id="cr-3" onclick="hlWord('across',1)">
+                <span class="c-num">3</span>
+                <span class="c-txt">What Riko gains from every mission — facts, skills, data</span>
+              </div>
+              <div class="clue-row" id="cr-4" onclick="hlWord('across',7)">
+                <span class="c-num">4</span>
+                <span class="c-txt">Optimal window for chromosome feature extraction and boundary clarity.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="xw-scanline"></div>
+
+        <div class="feedback" id="fb2" style="text-align:center;margin:12px 0 4px"></div>
+
+        <div class="xw-verify-row">
+          <button class="btn-submit" onclick="checkCrossword()">Check Grid ✓</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══════════ STEP 3: REBUS ══════════ -->
+    <div class="challenge-card" id="step3" style="display:none">
+      <div class="challenge-header">
+        <div class="step-icon rebus">🧩</div>
+        <div class="step-meta">
+          <h2>Phase 03 — The Rebus Riddle</h2>
+          <p>Riko left a visual puzzle on the community board. Can you decode it!</p>
+        </div>
+      </div>
+
+      <div class="challenge-body">
+        <div class="hint-box">
+          <div class="rebus-clues">
+            <!-- 🔔 INN -->
+            <div class="rebus-piece">
+              <span class="rebus-emoji">🔔</span>
+              <span class="rebus-label">INN</span>
+            </div>
+            <div class="rebus-op">+</div>
+            <!-- 🥚 OVA -->
+            <div class="rebus-piece">
+              <span class="rebus-emoji">🥚</span>
+              <span class="rebus-label">OVA</span>
+            </div>
+            <div class="rebus-op">+</div>
+            <!-- 🍵 TEA − A -->
+            <div class="rebus-piece">
+              <span class="rebus-emoji">🍵</span>
+              <span class="rebus-label">TEA − A</span>
+            </div>
+          </div>
+
+          <!-- <div class="hint-box" style="margin-bottom:14px">
+            <strong>📌 How to read it</strong>
+            INN (bell) + OVA (egg, meaning "new" in Latin) + TE (tea minus the A) = ?
+            <br />Hint: it's one of WIE 2026's key values!
+          </div> -->
+
+          <div class="answer-group">
+            <input class="answer-input" id="ans3" type="text" placeholder="Type the word…" autocomplete="off" />
+            <button class="btn-submit" onclick="checkStep3()">Check</button>
+          </div>
+          <div class="feedback" id="fb3"></div>
+
+          <button class="bruno-hint-btn" onclick="toggleHint('brh3')">🐾 Ask Bruno for a hint</button>
+          <div class="bruno-speech" id="brh3">*Woof woof!* Think of the WIE 2026 theme: "Technology with Purpose —
+            _______ Responsibly." 🐾</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ FINAL SCREEN ══════════ -->
+    <div class="final-screen" id="finalScreen">
+      <div class="final-badge">🏅</div>
+      <!-- <h2>STEM <span>Innovator</span> Certified!</h2> -->
+      <p class="tagline">
+        You decoded the cipher, synchronized the grid, and cracked the rebus.<br />
+        Officially conquered the challenge!
+      </p>
+
+      <!-- NEW: WIE Celebration Box with Pass Phrase -->
+      <div class="pass-phrase-box">
+        <p class="celebrate">🎉 Happy WIE Day 2026! 🎉</p>
+        <p class="instruct">Pass Phrase
+        </p>
+        <div class="phrase">STEM EMPOWERS</div>
+      </div>
+
+      <div style="margin-top: 10px;">
+        <button class="bruno-hint-btn" onclick="resetChallenge()"
+          style="color: var(--wie-purple); border-color: var(--wie-purple);">↻ Replay Challenge</button>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <!-- ══════════ GLOBAL SUCCESS MODAL ══════════ -->
+  <div class="modal-overlay" id="successModal" onclick="handleModalClick()">
+    <div class="modal-content">
+      <div class="checkmark">✅</div>
+      <h3 id="modalTitle">Correct!</h3>
+      <p id="modalDesc">Great job!</p>
+      <div class="click-hint">Click anywhere to continue ➔</div>
+    </div>
+  </div>
+
+  <script>
+    /* ── Start Challenge ── */
+    function startChallenge() {
+      document.getElementById('welcomeCard').classList.remove('visible');
+      document.getElementById('welcomeCard').style.display = 'none';
+      document.getElementById('progressTrack').style.display = 'flex';
+      document.getElementById('step1').style.display = 'flex';
+      updateProgress(0);
+    }
+
+    /* ── Reset Challenge ── */
+    function resetChallenge() {
+      document.getElementById('finalScreen').classList.remove('visible');
+
+      // Reset Step 1
+      document.getElementById('ans1').value = '';
+      document.getElementById('ans1').className = 'answer-input';
+      document.getElementById('fb1').textContent = '';
+
+      // Reset Step 2
+      document.querySelectorAll('.xw-cell input').forEach(inp => {
+        if (!inp.disabled) inp.value = '';
+      });
+      document.querySelectorAll('.xw-cell').forEach(c => {
+        c.classList.remove('correct-cell', 'wrong-cell');
+      });
+      document.getElementById('fb2').textContent = '';
+
+      // Reset Step 3
+      document.getElementById('ans3').value = '';
+      document.getElementById('ans3').className = 'answer-input';
+      document.getElementById('fb3').textContent = '';
+
+      // Hide all hints
+      document.querySelectorAll('.bruno-speech').forEach(el => el.classList.remove('visible'));
+
+      // Reset UI flow
+      document.getElementById('welcomeCard').style.display = '';
+      document.getElementById('welcomeCard').classList.add('visible');
+      document.getElementById('progressTrack').style.display = 'none';
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ── Cipher table ── */
+    const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    // show: row cipher letter → plain (shift back 3)
+    function buildCipherTable() {
+      const t = document.getElementById('cipherTable');
+      for (let i = 0; i < 26; i++) {
+        const plain = alpha[i];
+        const cipher = alpha[(i + 3) % 26];
+        t.innerHTML += `<div class="cipher-cell"><div class="top">${cipher}</div><div>${plain}</div></div>`;
+      }
+    }
+    buildCipherTable();
+
+    /* ── Toggle Bruno hint ── */
+    function toggleHint(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('visible');
+    }
+
+    /* ── Step navigation & Progress ── */
+    function goStep(n) {
+      const steps = { 1: 'step1', 2: 'step2', 3: 'step3' };
+      Object.values(steps).forEach(id => document.getElementById(id).style.display = 'none');
+      document.getElementById(steps[n]).style.display = 'flex'; // Uses flex to maintain uniform heights
+      document.getElementById(steps[n]).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      updateProgress(n - 1);
+    }
+
+    function updateProgress(activeIdx) {
+      for (let i = 0; i < 3; i++) {
+        const dot = document.getElementById('dot' + i);
+        dot.classList.remove('active', 'done');
+        if (i < activeIdx) dot.classList.add('done');
+        else if (i === activeIdx) dot.classList.add('active');
+        if (i < 2) {
+          const line = document.getElementById('line' + i);
+          line.classList.toggle('done', i < activeIdx);
+        }
+      }
+    }
+
+    /* ── Global Modal Logic ── */
+    let nextStepAction = null;
+
+    function showSuccessModal(title, desc, action) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDesc').innerHTML = desc;
+      nextStepAction = action;
+      document.getElementById('successModal').classList.add('active');
+    }
+
+    function handleModalClick() {
+      const modal = document.getElementById('successModal');
+      if (modal.classList.contains('active')) {
+        modal.classList.remove('active');
+        if (nextStepAction) {
+          setTimeout(nextStepAction, 300); // Allow modal fade out animation to trigger
+        }
+      }
+    }
+
+    /* ── Step 1: Caesar Cipher ── */
+    const CIPHER_ANSWER = 'WOMEN ENGINEER';
+
+    function checkStep1() {
+      const val = document.getElementById('ans1').value.trim().toUpperCase().replace(/\s+/g, ' ');
+      const fb = document.getElementById('fb1');
+      const inp = document.getElementById('ans1');
+      if (val === CIPHER_ANSWER) {
+        inp.classList.remove('wrong'); inp.classList.add('correct');
+        fb.textContent = ''; // Clear error message
+        updateProgress(0); // visually mark circle 1 done
+
+        // Trigger Modal
+        showSuccessModal(
+          'Decoded! "WOMEN ENGINEER"',
+          'You cracked the cipher! Ready for the next challenge?',
+          () => goStep(2)
+        );
+      } else {
+        inp.classList.remove('correct'); inp.classList.add('wrong');
+        fb.className = 'feedback err'; fb.textContent = '✗ Not quite. Remember: shift each letter back by 3.';
+        setTimeout(() => inp.classList.remove('wrong'), 500);
+      }
+    }
+
+    document.getElementById('ans1').addEventListener('keydown', e => { if (e.key === 'Enter') checkStep1(); });
+
+    /* ── Step 2: Blockchain Crossword ── */
+    const SOL = {};
+    'INNOVATE'.split('').forEach((l, i) => SOL[`${i}-1`] = l);
+    'RESEARCH'.split('').forEach((l, i) => SOL[`${i}-5`] = l);
+    'KNOWLEDGE'.split('').forEach((l, i) => SOL[`1-${i}`] = l);
+    'METAPHASE'.split('').forEach((l, i) => SOL[`7-${i}`] = l);
+
+    const SHARED = new Set(['1-1', '1-5', '7-1', '7-5']);
+    const HINTS = new Set(['0-5', '7-0', '7-8']);   // R, M, E
+    const CLUE_NUMS = { '0-1': '1', '0-5': '2', '1-0': '3', '7-0': '4' };
+
+    function buildCrossword() {
+      const gridEl = document.getElementById('xwGrid');
+      const ROWS = 8, COLS = 9;
+
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const key = `${r}-${c}`;
+          const isLive = !!SOL[key];
+          const div = document.createElement('div');
+          div.className = 'xw-cell ' + (isLive ? 'live' : 'dead');
+          div.id = `c-${r}-${c}`;
+
+          if (SHARED.has(key)) div.classList.add('shared');
+          if (HINTS.has(key)) div.classList.add('hint');
+
+          if (CLUE_NUMS[key]) {
+            div.innerHTML += `<span class="cn">${CLUE_NUMS[key]}</span>`;
+          }
+
+          if (isLive) {
+            const inp = document.createElement('input');
+            inp.maxLength = 1;
+            if (HINTS.has(key)) {
+              inp.value = SOL[key];
+              inp.disabled = true;
+            }
+
+            inp.addEventListener('input', function () {
+              this.value = this.value.toUpperCase();
+            });
+            div.appendChild(inp);
+          }
+          gridEl.appendChild(div);
+        }
+      }
+    }
+    buildCrossword();
+
+    function hlWord(dir, index) {
+      document.querySelectorAll('.xw-cell').forEach(c => c.classList.remove('hl-across', 'hl-down'));
+      document.querySelectorAll('.clue-row').forEach(c => c.classList.remove('active-clue'));
+
+      if (dir === 'across') {
+        for (let c = 0; c < 9; c++) {
+          let cell = document.getElementById(`c-${index}-${c}`);
+          if (cell) cell.classList.add('hl-across');
+        }
+        document.getElementById(`cr-${index === 1 ? 3 : 4}`).classList.add('active-clue');
+      } else {
+        for (let r = 0; r < 8; r++) {
+          let cell = document.getElementById(`c-${r}-${index}`);
+          if (cell) cell.classList.add('hl-down');
+        }
+        document.getElementById(`cr-${index === 1 ? 1 : 2}`).classList.add('active-clue');
+      }
+    }
+
+    function checkCrossword() {
+      let allCorrect = true;
+      Object.keys(SOL).forEach(key => {
+        const cell = document.getElementById(`c-${key}`);
+        const inp = cell.querySelector('input');
+        if (inp.value.toUpperCase() === SOL[key]) {
+          cell.classList.add('correct-cell');
+          cell.classList.remove('wrong-cell');
+        } else {
+          cell.classList.add('wrong-cell');
+          cell.classList.remove('correct-cell');
+          allCorrect = false;
+          setTimeout(() => cell.classList.remove('wrong-cell'), 500);
+        }
+      });
+
+      const fb = document.getElementById('fb2');
+      if (allCorrect) {
+        fb.textContent = ''; // Clear error message
+        showSuccessModal(
+          'Chain Intact! 🔗',
+          'Network integrity confirmed across all nodes.',
+          () => goStep(3)
+        );
+      } else {
+        fb.className = 'feedback err'; fb.textContent = '✗ Some letters are missing or incorrect.';
+      }
+    }
+
+    /* ── Step 3: Rebus ── */
+    const REBUS_ANSWER = 'INNOVATE';
+
+    function checkStep3() {
+      const val = document.getElementById('ans3').value.trim().toUpperCase();
+      const fb = document.getElementById('fb3');
+      const inp = document.getElementById('ans3');
+
+      if (val === REBUS_ANSWER) {
+        inp.classList.remove('wrong'); inp.classList.add('correct');
+        fb.textContent = '';
+
+        // Trigger Modal
+        showSuccessModal(
+          'Perfect! 🎉',
+          'You\'ve successfully saved the day!',
+          () => showFinal()
+        );
+      } else {
+        inp.classList.remove('correct'); inp.classList.add('wrong');
+        // fb.className = 'feedback err'; fb.textContent = '✗ Not quite. Remember: INN + OVA + TE = ?';
+        fb.className = 'feedback err'; fb.textContent = '✗ Not quite. Try again!';
+
+        setTimeout(() => inp.classList.remove('wrong'), 500);
+      }
+    }
+
+    document.getElementById('ans3').addEventListener('keydown', e => { if (e.key === 'Enter') checkStep3(); });
+
+    /* ── Final screen ── */
+    function showFinal() {
+      document.getElementById('step3').style.display = 'none';
+      const fin = document.getElementById('finalScreen');
+      fin.classList.add('visible');
+      updateProgress(3);
+      fin.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Mark all dots done visually
+      for (let i = 0; i < 3; i++) {
+        const dot = document.getElementById('dot' + i);
+        dot.classList.remove('active'); dot.classList.add('done');
+        if (i < 2) document.getElementById('line' + i).classList.add('done');
+      }
+    }
+  </script>
+</body>
+
+</html>
