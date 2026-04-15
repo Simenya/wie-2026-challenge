@@ -289,6 +289,45 @@
     }
 
     /* ── CIPHER ── */
+    .msg-box {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .msg-label {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .msg-cipher {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      color: var(--wie-purple);
+      letter-spacing: 0.15em;
+      margin-bottom: 6px;
+      word-break: break-all;
+    }
+
+    .msg-decoded {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      color: var(--success);
+      letter-spacing: 0.05em;
+    }
+
+    .msg-decoded.pending {
+      color: var(--wie-gold);
+      letter-spacing: 0.2em;
+    }
+
     .cipher-display {
       background: rgba(0, 0, 0, 0.3);
       border: 1px solid var(--border);
@@ -736,6 +775,7 @@
     .bruno-hint-btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
       background: none;
       border: 1px solid rgba(244, 164, 10, 0.35);
@@ -747,6 +787,8 @@
       cursor: pointer;
       margin-top: 14px;
       transition: background 0.2s;
+      width: fit-content;
+      align-self: center;
     }
 
     .bruno-hint-btn:hover {
@@ -1172,29 +1214,34 @@
       <div class="challenge-header">
         <div class="step-icon cipher">🔐</div>
         <div class="step-meta">
-          <h2>Phase 01 — The Coded Message</h2>
-          <p>Riko found a mysterious encrypted note. Help her decode it using the Caesar Cipher!</p>
+          <h2>Phase 01 — Crack the Cipher</h2>
+          <p>Riko found a mysterious encrypted notebook. She managed to decrypt the first message but is finding challenges decoding message 2. Help her decode it!</p>
         </div>
       </div>
 
       <div class="challenge-body">
-        <div class="hint-box">
-          <div class="cipher-display" id="cipherText"> <b>ZRPHQ HQJLQHHU</b></div>
-
-          <!-- Reference strip A–Z shifted 3 -->
-          <div class="cipher-table" id="cipherTable"></div>
-
-          <div class="answer-group">
-            <input class="answer-input" id="ans1" type="text" placeholder="Type the decoded phrase…"
-              autocomplete="off" />
-            <button class="btn-submit" onclick="checkStep1()">Check</button>
-          </div>
-          <div class="feedback" id="fb1"></div>
-
-          <button class="bruno-hint-btn" onclick="toggleHint('brh1')">🐾 Ask Bruno for a hint</button>
-          <div class="bruno-speech" id="brh1">*Woof!* The first word starts with W and the second starts with E. Count
-            back 3 letters from Z… what do you get? 🐶</div>
+        <div class="msg-box">
+          <div class="msg-label">Message 1 [Decoded]</div>
+          <div class="msg-cipher">OHDGLQJ ZLWK SXUSRVH</div>
+          <div class="msg-decoded">↳ LEADING WITH PURPOSE</div>
         </div>
+
+        <div class="msg-box">
+          <div class="msg-label">Message 2</div>
+          <div class="msg-cipher">ZRPHQ HQJLQHHU</div>
+          <div class="msg-decoded pending" id="msg2-decoded">↳ ***** ********</div>
+        </div>
+
+        <div class="answer-group">
+          <input class="answer-input" id="ans1" type="text" placeholder="Type the decoded phrase…"
+            autocomplete="off" />
+          <button class="btn-submit" onclick="checkStep1()">Check</button>
+        </div>
+        <div class="feedback" id="fb1"></div>
+
+        <button class="bruno-hint-btn" onclick="toggleHint('brh1')">🐾 Ask Bruno for a hint</button>
+        <div class="bruno-speech" id="brh1">*Woof!* The first word starts with W and the second starts with E. Count
+          back 3 letters from Z… what do you get? 🐶</div>
       </div>
     </div>
 
@@ -1203,7 +1250,7 @@
       <div class="challenge-header">
         <div class="step-icon logic">🔢</div>
         <div class="step-meta">
-          <h2>Phase 02 — Riko's Block Grid</h2>
+          <h2>Phase 32 — Riko's Block Grid</h2>
           <p>Four terms from Riko’s universe—chained into a single network. Fill every block to bring the grid online.
           </p>
         </div>
@@ -1260,7 +1307,7 @@
       <div class="challenge-header">
         <div class="step-icon rebus">🧩</div>
         <div class="step-meta">
-          <h2>Phase 03 — The Rebus Riddle</h2>
+          <h2>Phase 02 — The Rebus Mystery</h2>
           <p>Riko left a visual puzzle on the community board. Can you decode it!</p>
         </div>
       </div>
@@ -1268,10 +1315,10 @@
       <div class="challenge-body">
         <div class="hint-box">
           <div class="rebus-clues">
-            <!-- 🔔 INN -->
+            <!-- 🏨 INN -->
             <div class="rebus-piece">
-              <span class="rebus-emoji">🔔</span>
-              <span class="rebus-label">INN</span>
+              <span class="rebus-emoji">🏨</span>
+              <!-- <span class="rebus-label">INN</span> -->
             </div>
             <div class="rebus-op">+</div>
             <!-- 🥚 OVA -->
@@ -1283,7 +1330,7 @@
             <!-- 🍵 TEA − A -->
             <div class="rebus-piece">
               <span class="rebus-emoji">🍵</span>
-              <span class="rebus-label">TEA − A</span>
+              <!-- <span class="rebus-label">TEA − A</span> -->
             </div>
           </div>
 
@@ -1361,6 +1408,11 @@
       document.getElementById('ans1').value = '';
       document.getElementById('ans1').className = 'answer-input';
       document.getElementById('fb1').textContent = '';
+      const pendingMsg = document.getElementById('msg2-decoded');
+      if (pendingMsg) {
+        pendingMsg.textContent = '↳ ***** ********';
+        pendingMsg.classList.add('pending');
+      }
 
       // Reset Step 2
       document.querySelectorAll('.xw-cell input').forEach(inp => {
@@ -1387,19 +1439,6 @@
       // Scroll to top
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    /* ── Cipher table ── */
-    const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    // show: row cipher letter → plain (shift back 3)
-    function buildCipherTable() {
-      const t = document.getElementById('cipherTable');
-      for (let i = 0; i < 26; i++) {
-        const plain = alpha[i];
-        const cipher = alpha[(i + 3) % 26];
-        t.innerHTML += `<div class="cipher-cell"><div class="top">${cipher}</div><div>${plain}</div></div>`;
-      }
-    }
-    buildCipherTable();
 
     /* ── Toggle Bruno hint ── */
     function toggleHint(id) {
@@ -1460,12 +1499,19 @@
         inp.classList.remove('wrong'); inp.classList.add('correct');
         fb.textContent = ''; // Clear error message
         updateProgress(0); // visually mark circle 1 done
+        
+        // Update the visual decoded text
+        const pendingMsg = document.getElementById('msg2-decoded');
+        if (pendingMsg) {
+          pendingMsg.textContent = '↳ ' + CIPHER_ANSWER;
+          pendingMsg.classList.remove('pending');
+        }
 
         // Trigger Modal
         showSuccessModal(
           'Decoded! "WOMEN ENGINEER"',
           'You cracked the cipher! Ready for the next challenge?',
-          () => goStep(2)
+          () => goStep(3)
         );
       } else {
         inp.classList.remove('correct'); inp.classList.add('wrong');
@@ -1566,7 +1612,7 @@
         showSuccessModal(
           'Chain Intact! 🔗',
           'Network integrity confirmed across all nodes.',
-          () => goStep(3)
+          () => showFinal()
         );
       } else {
         fb.className = 'feedback err'; fb.textContent = '✗ Some letters are missing or incorrect.';
@@ -1589,7 +1635,7 @@
         showSuccessModal(
           'Perfect! 🎉',
           'You\'ve successfully saved the day!',
-          () => showFinal()
+          () => goStep(2)
         );
       } else {
         inp.classList.remove('correct'); inp.classList.add('wrong');
